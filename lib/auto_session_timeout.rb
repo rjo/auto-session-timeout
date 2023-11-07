@@ -11,6 +11,7 @@ module AutoSessionTimeout
         if session_expired?(c) && !signing_in?(c)
           handle_session_reset(c)
         else
+          puts "---> c: #{c}"
           puts "---> original url #{c.request.original_url} active_url: #{c.send(:active_url)}"
           puts "---> #{c.request.original_url.start_with?(c.send(:active_url))}"
           unless c.request.original_url.start_with?(c.send(:active_url))
