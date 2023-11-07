@@ -12,7 +12,7 @@ module AutoSessionTimeout
           handle_session_reset(c)
         else
           puts "---> c: #{c}"
-          puts "---> original url #{c.request.original_url} active_url: #{c.send(:active_url)}"
+          puts "---> original url #{c.request.original_url} active_url: #{c.send(:admin_active_url)}"
           puts "---> #{c.request.original_url.start_with?(c.send(:active_url))}"
           unless c.request.original_url.start_with?(c.send(:active_url))
             offset = seconds || (current_admin_user.respond_to?(:auto_timeout) ? current_admin_user.auto_timeout : nil)
