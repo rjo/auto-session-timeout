@@ -7,11 +7,16 @@ module AutoSessionTimeout
   module ClassMethods
     def auto_session_timeout(seconds=nil)
       protect_from_forgery except: [:active, :timeout]
+      puts "-----------> X1"
       prepend_before_action do |c|
+        puts "-----------> X2"
         if session_expired?(c) && !signing_in?(c)
+          puts "-----------> X2.1"
           handle_session_reset(c)
         else
+          puts "-----------> X2.2"
           unless c.request.original_url.start_with?(c.send(:active_url))
+            puts "-----------> X3"
             offset = seconds || (current_user.respond_to?(:auto_timeout) ? current_user.auto_timeout : nil)
             c.session[:auto_session_expires_at] = Time.now + offset if offset && offset > 0
           end
