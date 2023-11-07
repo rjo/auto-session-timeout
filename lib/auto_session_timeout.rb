@@ -14,7 +14,8 @@ module AutoSessionTimeout
           puts "-----------> X2.1"
           handle_session_reset(c)
         else
-          puts "-----------> X2.2"
+          puts "-----------> X2.2 original url #{c.request.original_url} active url #{c.send(:active_url)}"
+          puts "-----------> X2.2 test: #{c.request.original_url.start_with?(c.send(:active_url))}"
           unless c.request.original_url.start_with?(c.send(:active_url))
             puts "-----------> X3"
             offset = seconds || (current_user.respond_to?(:auto_timeout) ? current_user.auto_timeout : nil)
