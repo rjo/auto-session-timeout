@@ -6,7 +6,6 @@ module AutoSessionTimeout
   
   module ClassMethods
     def auto_session_timeout(seconds=nil)
-      @my_data = "/admin/sign_in"
       protect_from_forgery except: [:active, :timeout]
       prepend_before_action do |c|
         if session_expired?(c) && !signing_in?(c)
@@ -31,9 +30,9 @@ module AutoSessionTimeout
     render plain: !!current_user, status: 200
   end
   
-  def render_session_timeout
+  def render_session_timeout(path)
     flash[:notice] = t("devise.failure.timeout", default: "Your session has timed out.")
-    redirect_to sign_in_path
+    redirect_to path
   end
 
   private
