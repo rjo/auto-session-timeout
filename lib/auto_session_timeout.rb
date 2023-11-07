@@ -51,6 +51,7 @@ module AutoSessionTimeout
   end
 
   def session_expired?(c)
+    puts "-------> session_expired? #{c.session[:auto_session_expires_at]} #{c.session[:auto_session_expires_at].try(:<, Time.now)}"
     c.session[:auto_session_expires_at].try(:<, Time.now)
   end
 
